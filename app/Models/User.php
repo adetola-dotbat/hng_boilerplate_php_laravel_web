@@ -116,9 +116,9 @@ class User extends Authenticatable  implements JWTSubject
     public function hasPermissionTo($permission)
     {
         return $this->permissions()->where('name', $permission)->exists() ||
-               $this->roles()->whereHas('permissions', function ($query) use ($permission) {
-                   $query->where('name', $permission);
-               })->exists();
+            $this->roles()->whereHas('permissions', function ($query) use ($permission) {
+                $query->where('name', $permission);
+            })->exists();
     }
 
     public function hasRole($role)
@@ -172,4 +172,9 @@ class User extends Authenticatable  implements JWTSubject
             })->exists();
     }
 
+
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }
